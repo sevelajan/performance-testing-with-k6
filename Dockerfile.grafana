@@ -1,8 +1,8 @@
-FROM grafana/grafana:5.2.4
+FROM grafana/grafana:7.4.3
 
 USER root
 
-RUN apt-get update && apt-get -y install curl
+RUN apk update && apk add curl
 
 
 # Change the default data directory (otherwise grafana.db won't persist)
