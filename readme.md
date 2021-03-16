@@ -1,3 +1,10 @@
+# Testování výkonu s K6
+
+> Testování zatížení, ukázka k6
+> Vychází z video tutoriálu a podkladů [https://github.com/cajames/performance-testing-with-k6](Chrise Jamese)
+
+
+
 # Performance Testing with K6
 
 > Load testing workshop, demonstrating k6

@@ -19,7 +19,9 @@ services:
     ports:
       - "3000:3000"
   k6:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.k6
     ports:
       - "6565:6565"
     volumes:
