@@ -1,4 +1,4 @@
 FROM loadimpact/k6:latest
 
 # copy HAR file
-COPY ./tests/03-har-to-k6/example.har  /home/k6/
+#COPY ./tests/03-har-to-k6/example.har  /home/k6/
