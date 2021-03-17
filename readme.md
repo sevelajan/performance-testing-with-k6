@@ -17,36 +17,37 @@
 
 ### Konverze HAR souboru na K6 javascript konfigurační soubor
 - vytvoření adresáře `./tests/03-har-to-k6/` a nakopírování HAR souboru `example.har` do něj
-- odkomentování příkazu ke zkopírování HAR souboru do Docker kontejneru
-\#COPY ./tests/03-har-to-k6/example.har  /home/k6/
+- v souboru `Dockerfile.k6` odkomentování příkazu ke zkopírování HAR souboru do Docker kontejneru:\
+`#COPY ./tests/03-har-to-k6/example.har  /home/k6/`
+- nyní je nutné znovu sestavit obraz a kontejner ke K6 (`docker rm JmenoKontejneru` a `docker image rmi IdObrazu`)
 - spuštění konverze HAR souboru `example.har` na konfigurační javascript soubor pro K6:
 `docker-compose run k6 convert example.har > ./tests/03-har-to-k6/test-script.js` 
-- nyní lze konvertovaný soubor upravit dle vlastního potřeb a spustit tento test dle předchozího bodu Spouštění
+- nyní lze konvertovaný soubor `test-script.js` upravit dle vlastního potřeb a spustit tento test dle předchozího bodu Spouštění
 
-# EN (original author version)
+# EN
 > [cajames/performance-testing-with-k6](https://github.com/cajames/performance-testing-with-k6)
 ## Performance Testing with K6
 
 > Load testing workshop, demonstrating k6
 
-> It comes from video tutorial and sources [Chrise Jamese](https://github.com/cajames/performance-testing-with-k6)
+> It comes from video tutorial and sources [Chris James](https://github.com/cajames/performance-testing-with-k6)
 
 ### Video
 
 [![Performance Testing with k6 Video](https://img.youtube.com/vi/Hu1K2ZGJ_K4/0.jpg)](https://www.youtube.com/watch?v=Hu1K2ZGJ_K4)
 
-
-## Getting started:
+### Getting started:
 - Download Docker images, build, inicialiyation and run InfluDB and Grafany:\
 `docker-compose up -d influxdb grafana`
-- Načtení Grafany [localhost:3000](http://localhost:3000) a import konfigurace nové přístrojové desky `grafana_dashboard.json`: "+ (CREATE)/Import", vybrat JSON soubor, následně vybrat našeptávanou databázi K6
-- `docker-compose run k6 run /tests/02-stages/test.js` spustí test s nastavením dle souboru `test.js` a průběh lze sledovat v Grafaně
+- Go to Grafana [localhost:3000](http://localhost:3000) and import configuration of new dashboard `grafana_dashboard.json`: "+ (CREATE)/Import", select JSON file, select whispered database K6
+- `docker-compose run k6 run /tests/02-stages/test.js` run the test with configuration from `test.js` and progress can be observed in Grafana
 ![Output](https://github.com/sevelajan/performance-testing-with-k6/blob/master/grafana_k6_outputs.png)
 
-### To use cloud run
-
-- Create an account with LoadImpact here to use the cloud run: [https://app.loadimpact.com/account/login](https://app.loadimpact.com/account/login)
-- Replace `LI_TOKEN` in the `Dockerfile` with your account token.
-- `docker-compose run k6 cloud /tests/01-simple/test.js` to run the test in the cloud
-
-Look through the k6 docs here: https://support.loadimpact.com/4.0/
+### Conversion HAR file to K6 javascript config file
+- create folder `./tests/03-har-to-k6/` and copy HAR file `example.har` into
+- in file `Dockerfile.k6` uncomment command to copy HAR file to building Docker container:\
+`#COPY ./tests/03-har-to-k6/example.har  /home/k6/`
+- it is necessary to rebuild the image and the container of K6 now (`docker rm NameOfContainer` a `docker image rmi IdOfImage`)
+- run conversation HAR file `example.har` to config script for K6:
+`docker-compose run k6 convert example.har > ./tests/03-har-to-k6/test-script.js` 
+- now it is possible converted config file `test-script.js` customize and run this test from the previous Getting started point
