@@ -1,9 +1,3 @@
-Step 1/2 : FROM loadimpact/k6:latest
- ---> 4acc550bdcfa
-Step 2/2 : COPY ./tests/03-har-to-k6/example.har  /home/k6/
- ---> 5cdfe145d4f3
-Successfully built 5cdfe145d4f3
-Successfully tagged performance-testing-with-k6_k6:latest
 import { group, sleep } from 'k6';
 import http from 'k6/http';
 
@@ -12,6 +6,16 @@ import http from 'k6/http';
 
 export let options = {
     maxRedirects: 0,
+    stages: [
+    // Ramp-up from 1 to 5 VUs in 10s
+    { duration: "15s", target: 10 },
+
+    // Stay at rest on 5 VUs for 5s
+    { duration: "30s", target: 10 },
+
+    // Ramp-down from 5 to 0 VUs for 5s
+    { duration: "15s", target: 0 }
+    ]
 };
 
 export default function() {

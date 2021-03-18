@@ -1,1 +1,2 @@
 .DS_Store
+./tests/03-har-to-k6/*
