@@ -1,40 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_K6",
-      "label": "K6",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "5.2.4"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "heatmap",
-      "name": "Heatmap",
-      "version": "5.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -51,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -60,30 +24,42 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "interval": ">1s",
       "legend": {
         "alignAsTable": true,
-        "avg": false,
-        "current": false,
+        "avg": true,
+        "current": true,
         "max": true,
         "min": true,
         "show": true,
-        "total": false,
+        "total": true,
         "values": true
       },
       "lines": false,
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -133,6 +109,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Virtual Users",
       "tooltip": {
@@ -177,21 +154,29 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 8,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 7,
       "interval": ">1s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": false,
-        "max": false,
-        "min": false,
+        "current": true,
+        "max": true,
+        "min": true,
         "show": true,
         "total": true,
         "values": true
@@ -200,7 +185,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -208,6 +197,10 @@
         {
           "alias": "Num Errors",
           "color": "#BF1B00"
+        },
+        {
+          "alias": "Num Successes",
+          "color": "#00ff00"
         }
       ],
       "spaceLength": 10,
@@ -231,7 +224,45 @@
               "type": "fill"
             }
           ],
-          "measurement": "errors",
+          "measurement": "a_errors",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Num Successes",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "a_successes",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "C",
@@ -255,8 +286,9 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
-      "title": "Errors Per Second",
+      "title": "Errors and Successes Per Second",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -299,21 +331,29 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 16,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 10,
       "interval": ">1s",
       "legend": {
         "alignAsTable": true,
         "avg": true,
-        "current": false,
-        "max": false,
-        "min": false,
+        "current": true,
+        "max": true,
+        "min": true,
         "show": true,
         "total": true,
         "values": true
@@ -322,12 +362,17 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:200",
           "alias": "Num Errors",
           "color": "#BF1B00"
         }
@@ -377,6 +422,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Checks Per Second",
       "tooltip": {
@@ -394,6 +440,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:213",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -402,6 +449,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:214",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -422,13 +470,21 @@
       "dashes": false,
       "datasource": "K6",
       "description": "Grouped by 1 sec intervals",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 5,
       "interval": ">1s",
       "legend": {
@@ -445,7 +501,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -653,6 +713,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "http_req_duration",
       "tooltip": {
@@ -705,6 +766,12 @@
       },
       "dataFormat": "timeseries",
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 7,
         "w": 12,
@@ -712,6 +779,7 @@
         "y": 7
       },
       "heatmap": {},
+      "hideZeroBuckets": false,
       "highlightCards": true,
       "id": 8,
       "interval": ">1s",
@@ -719,6 +787,7 @@
         "show": false
       },
       "links": [],
+      "reverseYBuckets": false,
       "targets": [
         {
           "dsType": "influxdb",
@@ -788,13 +857,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 4,
       "interval": ">1s",
       "legend": {
@@ -811,7 +888,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -862,6 +943,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "http_req_connecting (95%ile)",
       "tooltip": {
@@ -906,13 +988,21 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "K6",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 9,
       "interval": ">1s",
       "legend": {
@@ -929,7 +1019,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -980,6 +1074,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "http_req_blocked (95%ile)",
       "tooltip": {
@@ -1020,7 +1115,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 16,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1056,7 +1151,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "k6",
-  "uid": "RgdVrzDZz",
-  "version": 4
+  "title": "k6_new",
+  "uid": "RgdVrzDZZ",
+  "version": 2
 }

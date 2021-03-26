@@ -1,4 +1,7 @@
 version: "3"
+#volumes:
+#  data-postgres: {}
+#  data-opennms: {}
 services:
   influxdb:
     build:
@@ -16,8 +19,15 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=false
+      - GF_RENDERING_SERVER_URL=http://renderer:8081/render
+      - GF_RENDERING_CALLBACK_URL=http://grafana:3000/
+      - GF_LOG_FILTERS=rendering:debug
     ports:
       - "3000:3000"
+  renderer:
+    image: grafana/grafana-image-renderer:2.0.1
+    ports:
+      - 8081
   k6:
     build:
       context: .
@@ -29,3 +39,42 @@ services:
     environment:
       - K6_OUT=influxdb=http://influxdb:8086/k6
     command: "version"
+#  database:
+#    image: postgres:12
+#    container_name: database
+#    environment:
+#      - TZ=Europe/Berlin
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#    volumes:
+#      - data-postgres:/var/lib/postgresql/data
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#      interval: 10s
+#      timeout: 30s
+#      retries: 3
+#  horizon:
+#    image: opennms/horizon:27.1.0
+#    container_name: horizon
+#    environment:
+#      - TZ=Europe/Berlin
+#      - POSTGRES_HOST=database
+#      - POSTGRES_PORT=5432
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
+#      - OPENNMS_DBNAME=opennms
+#      - OPENNMS_DBUSER=opennms
+#      - OPENNMS_DBPASS=opennms
+#    volumes:
+#      - data-opennms:/opt/opennms/share/rrd
+#      - ./overlay:/opt/opennms-overlay
+#    command: ["-s"]
+#    ports:
+#      - "8980:8980/tcp"
+#      - "8101:8101/tcp"
+#      - "61616:61616/tcp"
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "-I", "http://localhost:8980/opennms/login.jsp" ]
+#      interval: 1m
+#      timeout: 5s
+#      retries: 3

@@ -1,9 +1,15 @@
-FROM grafana/grafana:7.4.3
+FROM grafana/grafana:7.4.3-ubuntu
 
 USER root
 
-RUN apk update && apk add curl
+#Non-Ubuntu version
+#RUN apk update && apk add curl
+#Ubuntu version
+RUN apt update && apt install curl
 
+#Install Grafana image Renderer
+ENV GF_EXTERNAL_IMAGE_STORAGE_PROVIDER local
+RUN grafana-cli plugins install grafana-image-renderer
 
 # Change the default data directory (otherwise grafana.db won't persist)
 RUN mkdir /var/lib/grafanadb
